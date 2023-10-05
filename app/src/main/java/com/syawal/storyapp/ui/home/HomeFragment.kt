@@ -63,8 +63,8 @@ class HomeFragment : Fragment() {
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_logout -> {
-                        findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
                         homeViewModel.logout()
+                        findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
                         true
                     }
 

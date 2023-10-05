@@ -21,4 +21,8 @@
     <string name="switch_camera">Switch camera</string>
     <string name="capture_image">Capture image</string>
     <string name="failed_to_load_image">Failed to load image</string>
+    <string name="appwidget_text">Story Widget</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+    <string name="empty_text">NO DATA</string>
 </resources>

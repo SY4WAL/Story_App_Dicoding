@@ -33,7 +33,12 @@ class DetailFragment : Fragment() {
 
         val idStory = DetailFragmentArgs.fromBundle(arguments as Bundle).idStory
 
-        getDetailStory(idStory)
+        val idFromWidget = arguments?.getString(EXTRA_ID) ?: ""
+        if (idFromWidget.isNotEmpty()) {
+            getDetailStory(idStory)
+        } else {
+            getDetailStory(idStory)
+        }
     }
 
     private fun getDetailStory(id: String) {
@@ -69,5 +74,17 @@ class DetailFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        const val EXTRA_ID = "extra_id"
+
+        fun newInstance(storyId: String): DetailFragment {
+            val args = Bundle()
+            args.putString(EXTRA_ID, storyId)
+            val fragment = DetailFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
