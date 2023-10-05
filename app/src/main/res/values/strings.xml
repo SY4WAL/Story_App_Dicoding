@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="tagline">A World of Stories in Your Pocket</string>
+    <string name="desc_tagline">Carry an entire universe of stories wherever you go with our app, your gateway to limitless adventures.</string>
+    <string name="email">Email</string>
+    <string name="email_error">Invalid email address</string>
+    <string name="password">Password</string>
+    <string name="password_error">Password must contain 8 character</string>
+    <string name="name">Name</string>
+    <string name="app_logo">App Logo</string>
+    <string name="logout">LogOut</string>
+    <string name="stories_image">Stories Image</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="camera">Camera</string>
+    <string name="description">Description</string>
+    <string name="button_add_story">Button add story</string>
+    <string name="setting">Setting</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="capture_image">Capture image</string>
+    <string name="failed_to_load_image">Failed to load image</string>
+</resources>

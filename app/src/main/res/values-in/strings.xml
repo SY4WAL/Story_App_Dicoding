@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="tagline">Dunia penuh cerita di dalam sakumu</string>
+    <string name="desc_tagline">Bawa alam semesta yang penuh cerita ke mana pun Anda pergi dengan aplikasi kami, pintu gerbang Anda menuju petualangan tanpa batas.</string>
+    <string name="email">Email</string>
+    <string name="email_error">Alamat email tidak valid</string>
+    <string name="password">Password</string>
+    <string name="password_error">Password harus terdiri dari 8 karakter</string>
+    <string name="name">Nama</string>
+    <string name="app_logo">App Logo</string>
+    <string name="logout">LogOut</string>
+    <string name="stories_image">Gambar Cerita</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Unggah</string>
+    <string name="camera">Camera</string>
+    <string name="description">Deskripsi</string>
+    <string name="button_add_story">Tombol tambah cerita</string>
+    <string name="setting">Setting</string>
+    <string name="switch_camera">Tukar kamera</string>
+    <string name="capture_image">Menangkap gambar</string>
+    <string name="failed_to_load_image">Gagal memuat gambar</string>
+</resources>
