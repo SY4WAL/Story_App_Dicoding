@@ -17,7 +17,6 @@ import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.data.api.response.ListStoryItem
 import com.syawal.storyapp.databinding.FragmentHomeBinding
 import com.syawal.storyapp.ui.StoryAdapter
-import com.syawal.storyapp.ui.TestFactory
 import com.syawal.storyapp.ui.ViewModelFactory
 
 class HomeFragment : Fragment() {
@@ -26,10 +25,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val homeViewModel by viewModels<HomeViewModel> {
         ViewModelFactory.getInstance(requireActivity())
-    }
-
-    private val viewModel by viewModels<ViewModel> {
-        TestFactory.getInstance(requireActivity())
     }
 
     override fun onCreateView(
@@ -43,22 +38,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        homeViewModel.getSession().observe(viewLifecycleOwner) {
-//            Log.d("check token before", it.token)
-//            if (it.token.isEmpty()) {
-//                findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
-//            } else {
-//                getStories()
-//            }
-//        }
+        homeViewModel.getSession().observe(viewLifecycleOwner) {
+            Log.d("check token before", it.token)
+            if (it.token.isEmpty()) {
+                findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
+            } else {
+                getStories()
+            }
+        }
 
         binding.buttonAdd.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addStoryFragment)
         }
 
         setMenu()
-
-        checkToken()
     }
 
     private fun setMenu() {
@@ -84,69 +77,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun checkToken() {
-        val storyAdapter = StoryAdapter()
-
-        // Observe the session to get the user's token
-        homeViewModel.getSession().observe(viewLifecycleOwner) { sessionData ->
-            Log.d("check token before", sessionData.token)
-            if (sessionData.token.isEmpty()) {
-                findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
-            } else {
-                // Token is available, so now you can fetch stories
-                fetchStories(storyAdapter)
-            }
-        }
-
-        binding.rvStories.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = storyAdapter
-        }
-    }
-
-    private fun fetchStories(storyAdapter: StoryAdapter) {
-        homeViewModel.getStories().observe(viewLifecycleOwner) { result ->
-            // Your code to handle the API response
-            if (result != null)
-                when (result) {
-                    is ResultState.Loading -> {
-                        showLoading(true)
-                    }
-
-                    is ResultState.Success -> {
-                        showLoading(false)
-                        val storyData = result.data
-
-                        storyAdapter.setOnItemClickCallback(object :
-                            StoryAdapter.OnItemClickCallback {
-                            override fun onItemClicked(
-                                story: ListStoryItem,
-                            ) {
-                                val position = storyData.indexOf(story)
-                                if (position != -1) {
-                                    val id = storyData[position].id
-                                    val toDetailFragment =
-                                        HomeFragmentDirections.actionHomeFragmentToDetailFragment()
-                                    toDetailFragment.idStory = id
-
-                                    findNavController().navigate(toDetailFragment)
-                                }
-                            }
-                        })
-                        storyAdapter.submitList(storyData)
-                    }
-
-                    is ResultState.Error -> {
-                        showLoading(false)
-                        showToast(result.error)
-                    }
-                }
-        }
-    }
-
-
     private fun getStories() {
         val storyAdapter = StoryAdapter()
+        binding.rvStories.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = storyAdapter
+        }
 
         homeViewModel.getStories().observe(viewLifecycleOwner) { result ->
 
@@ -184,11 +121,6 @@ class HomeFragment : Fragment() {
                         showToast(result.error)
                     }
                 }
-        }
-
-        binding.rvStories.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = storyAdapter
         }
     }
 

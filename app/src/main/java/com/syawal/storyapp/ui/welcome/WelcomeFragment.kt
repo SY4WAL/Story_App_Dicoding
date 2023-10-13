@@ -53,7 +53,7 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun playAnimation() {
-        val logo = ObjectAnimator.ofFloat(binding.appLogo, View.ALPHA, 1f).setDuration(100)
+        val logo = ObjectAnimator.ofFloat(binding.appLogo, View.ALPHA, 1f).setDuration(150)
         val appName = ObjectAnimator.ofFloat(binding.appName, View.ALPHA, 1f).setDuration(150)
         val tagline = ObjectAnimator.ofFloat(binding.tagline, View.ALPHA, 1f).setDuration(150)
         val desc = ObjectAnimator.ofFloat(binding.descTagline, View.ALPHA, 1f).setDuration(150)

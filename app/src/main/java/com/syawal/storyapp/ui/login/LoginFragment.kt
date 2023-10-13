@@ -52,16 +52,11 @@ class LoginFragment : Fragment() {
                     }
 
                     is ResultState.Success -> {
-                        if (result.data.message == "success") {
-                            showToast(result.data.message)
-                            loginViewModel.saveSession(result.data.loginResult)
-                            Log.d("check login", result.data.loginResult.token)
-                            showLoading(false)
-                            navController.navigate(R.id.action_loginFragment_to_homeFragment)
-                        } else {
-                            showToast("Login failed: ${result.data.message}")
-                            showLoading(false)
-                        }
+                        showToast(result.data.message)
+                        loginViewModel.saveSession(result.data.loginResult)
+                        Log.d("check login", result.data.loginResult.token)
+                        showLoading(false)
+                        navController.navigate(R.id.action_loginFragment_to_homeFragment)
                     }
 
                     is ResultState.Error -> {
