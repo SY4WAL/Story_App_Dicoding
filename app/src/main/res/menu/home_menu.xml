@@ -12,5 +12,5 @@
         android:id="@+id/menu_logout"
         android:title="@string/logout"
         android:icon="@drawable/logout"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 </menu>

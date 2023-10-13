@@ -11,7 +11,7 @@ class ApiConfig {
     companion object {
         private const val endpoint = "https://story-api.dicoding.dev/v1/"
 
-        fun getApiService(token: String): ApiService {
+        fun getApiService(): ApiService {
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor()
                     .setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -20,17 +20,17 @@ class ApiConfig {
                     .setLevel(HttpLoggingInterceptor.Level.NONE)
             }
 
-            val authInterceptor = Interceptor { chain ->
-                val req = chain.request()
-                val requestHeaders = req.newBuilder()
-                    .addHeader("Authorization", "Bearer $token")
-                    .build()
-                chain.proceed(requestHeaders)
-            }
+//            val authInterceptor = Interceptor { chain ->
+//                val req = chain.request()
+//                val requestHeaders = req.newBuilder()
+//                    .addHeader("Authorization", "Bearer $token")
+//                    .build()
+//                chain.proceed(requestHeaders)
+//            }
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
-                .addInterceptor(authInterceptor)
+//                .addInterceptor(authInterceptor)
                 .build()
 
             val retrofit = Retrofit.Builder()

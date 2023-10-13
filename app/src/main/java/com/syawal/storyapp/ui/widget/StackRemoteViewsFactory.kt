@@ -32,6 +32,7 @@ internal class StackRemoteViewsFactory(
     override fun onDataSetChanged() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                val token = repository.getSession().toString()
                 val response = repository.getStories().value
                 when (response) {
                     is ResultState.Success -> {

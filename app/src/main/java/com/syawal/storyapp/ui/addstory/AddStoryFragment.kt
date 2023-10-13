@@ -105,8 +105,7 @@ class AddStoryFragment : Fragment() {
             val imgFile = uriToFile(uri, requireContext()).reduceFileImage()
             val desc = binding.edAddDescription.text.toString()
 
-            addStoryViewModel.uploadStory(imgFile, desc)
-                .observe(viewLifecycleOwner) { result ->
+            addStoryViewModel.uploadStory(imgFile, desc).observe(viewLifecycleOwner) { result ->
                     if (result != null) {
                         when (result) {
                             is ResultState.Loading -> {

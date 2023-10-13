@@ -21,4 +21,5 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun getStories() = repository.getStories()
+
 }

@@ -50,13 +50,18 @@ class ViewModelFactory(private val repository: Repository): ViewModelProvider.Ne
         @Volatile
         private var INSTANCE: ViewModelFactory? = null
         @JvmStatic
-        fun getInstance(context: Context):ViewModelFactory {
-            if (INSTANCE == null) {
-                synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(Injection.provideRepository(context))
-                }
+        fun getInstance(context: Context): ViewModelFactory {
+//            if (INSTANCE == null) {
+//                synchronized(ViewModelFactory::class.java) {
+//                    INSTANCE = ViewModelFactory(Injection.provideRepository(context))
+//                }
+//            }
+//            return INSTANCE as ViewModelFactory
+            return INSTANCE ?: synchronized(ViewModelFactory::class.java) {
+                INSTANCE ?: ViewModelFactory(
+                    Injection.provideRepository(context)
+                ).also { INSTANCE = it }
             }
-            return INSTANCE as ViewModelFactory
         }
     }
 }

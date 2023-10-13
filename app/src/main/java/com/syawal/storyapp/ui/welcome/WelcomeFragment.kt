@@ -27,19 +27,19 @@ class WelcomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        welcomeViewModel.getSession().observe(viewLifecycleOwner) {
-            if (it.token.isNotEmpty()) {
-                Log.d("check at welcome", it.token)
-                findNavController().navigate(R.id.action_welcomeFragment_to_homeFragment)
-            }
-        }
-
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        welcomeViewModel.getSession().observe(viewLifecycleOwner) {
+            if (it.token.isNotEmpty()) {
+                Log.d("check at welcome", it.token)
+                findNavController().navigate(R.id.action_welcomeFragment_to_homeFragment)
+            }
+        }
 
         playAnimation()
 
@@ -53,7 +53,7 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun playAnimation() {
-        val logo = ObjectAnimator.ofFloat(binding.appLogo, View.ALPHA, 1f).setDuration(0)
+        val logo = ObjectAnimator.ofFloat(binding.appLogo, View.ALPHA, 1f).setDuration(100)
         val appName = ObjectAnimator.ofFloat(binding.appName, View.ALPHA, 1f).setDuration(150)
         val tagline = ObjectAnimator.ofFloat(binding.tagline, View.ALPHA, 1f).setDuration(150)
         val desc = ObjectAnimator.ofFloat(binding.descTagline, View.ALPHA, 1f).setDuration(150)

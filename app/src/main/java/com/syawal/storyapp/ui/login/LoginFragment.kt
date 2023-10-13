@@ -59,9 +59,7 @@ class LoginFragment : Fragment() {
                             showLoading(false)
                             navController.navigate(R.id.action_loginFragment_to_homeFragment)
                         } else {
-                            // Handle the case where the message is not "success"
                             showToast("Login failed: ${result.data.message}")
-                            Log.d("check token failed", "this is the token ${ result.data.loginResult.token }")
                             showLoading(false)
                         }
                     }
