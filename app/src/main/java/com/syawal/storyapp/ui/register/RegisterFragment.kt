@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.databinding.FragmentRegisterBinding
+import com.syawal.storyapp.ui.AuthViewModelFactory
 import com.syawal.storyapp.ui.ViewModelFactory
 
 class RegisterFragment : Fragment() {
@@ -18,7 +19,7 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private val registerViewModel by viewModels<RegisterViewModel> {
-        ViewModelFactory.getInstance(requireActivity())
+        AuthViewModelFactory.getInstance(requireActivity())
     }
 
     override fun onCreateView(

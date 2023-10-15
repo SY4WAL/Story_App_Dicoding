@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.syawal.storyapp.R
 import com.syawal.storyapp.databinding.FragmentWelcomeBinding
+import com.syawal.storyapp.ui.AuthViewModelFactory
 import com.syawal.storyapp.ui.ViewModelFactory
 
 class WelcomeFragment : Fragment() {
@@ -20,7 +21,7 @@ class WelcomeFragment : Fragment() {
     private var _binding: FragmentWelcomeBinding? = null
     private val binding get() = _binding!!
     private val welcomeViewModel by viewModels<WelcomeViewModel> {
-        ViewModelFactory.getInstance(requireActivity())
+        AuthViewModelFactory.getInstance(requireActivity())
     }
 
     override fun onCreateView(

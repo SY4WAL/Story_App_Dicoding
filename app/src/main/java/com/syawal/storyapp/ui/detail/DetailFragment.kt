@@ -6,18 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.databinding.FragmentDetailBinding
-import com.syawal.storyapp.ui.ViewModelFactory
+import com.syawal.storyapp.ui.StoryViewModelFactory
 
 class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private val detailViewModel by viewModels<DetailViewModel> {
-        ViewModelFactory.getInstance(requireActivity())
+        StoryViewModelFactory.getInstance(requireActivity())
     }
 
     override fun onCreateView(
@@ -25,6 +26,9 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        val sharedElementName = arguments?.getString("photo")
+        val imgView = binding.ivDetailPhoto
+        ViewCompat.setTransitionName(imgView, sharedElementName)
         return binding.root
     }
 
@@ -35,7 +39,7 @@ class DetailFragment : Fragment() {
 
         val idFromWidget = arguments?.getString(EXTRA_ID) ?: ""
         if (idFromWidget.isNotEmpty()) {
-            getDetailStory(idStory)
+            getDetailStory(idFromWidget)
         } else {
             getDetailStory(idStory)
         }

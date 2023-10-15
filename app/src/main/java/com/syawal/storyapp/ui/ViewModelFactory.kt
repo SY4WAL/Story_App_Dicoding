@@ -18,29 +18,29 @@ class ViewModelFactory(private val repository: Repository): ViewModelProvider.Ne
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
 
-            modelClass.isAssignableFrom(WelcomeViewModel::class.java) -> {
-                WelcomeViewModel(repository) as T
-            }
+//            modelClass.isAssignableFrom(WelcomeViewModel::class.java) -> {
+//                WelcomeViewModel(repository) as T
+//            }
 
-            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(repository) as T
-            }
+//            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
+//                LoginViewModel(repository) as T
+//            }
 
-            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
-                RegisterViewModel(repository) as T
-            }
+//            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
+//                RegisterViewModel(repository) as T
+//            }
 
-            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel(repository) as T
-            }
+//            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+//                HomeViewModel(repository) as T
+//            }
 
-            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
-                DetailViewModel(repository) as T
-            }
-
-            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
-                AddStoryViewModel(repository) as T
-            }
+//            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
+//                DetailViewModel(repository) as T
+//            }
+//
+//            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
+//                AddStoryViewModel(repository) as T
+//            }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class " + modelClass.name)
         }
@@ -49,14 +49,14 @@ class ViewModelFactory(private val repository: Repository): ViewModelProvider.Ne
     companion object {
         @Volatile
         private var INSTANCE: ViewModelFactory? = null
+
         @JvmStatic
         fun getInstance(context: Context):ViewModelFactory {
-            if (INSTANCE == null) {
-                synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(Injection.provideRepository(context))
-                }
+            return INSTANCE ?: synchronized(ViewModelFactory::class.java) {
+                INSTANCE ?: ViewModelFactory(
+                    Injection.provideRepository(context)
+                ).also { INSTANCE = it }
             }
-            return INSTANCE as ViewModelFactory
         }
     }
 }

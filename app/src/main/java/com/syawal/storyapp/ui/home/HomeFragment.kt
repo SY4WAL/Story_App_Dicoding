@@ -16,15 +16,21 @@ import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.data.api.response.ListStoryItem
 import com.syawal.storyapp.databinding.FragmentHomeBinding
+import com.syawal.storyapp.ui.AuthViewModelFactory
 import com.syawal.storyapp.ui.StoryAdapter
+import com.syawal.storyapp.ui.StoryViewModelFactory
 import com.syawal.storyapp.ui.ViewModelFactory
+import com.syawal.storyapp.ui.login.LoginViewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val homeViewModel by viewModels<HomeViewModel> {
-        ViewModelFactory.getInstance(requireActivity())
+        StoryViewModelFactory.getInstance(requireActivity())
+    }
+    private val loginViewModel by viewModels<LoginViewModel> {
+        AuthViewModelFactory.getInstance(requireActivity())
     }
 
     override fun onCreateView(
@@ -38,14 +44,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel.getSession().observe(viewLifecycleOwner) {
-            Log.d("check token before", it.token)
-            if (it.token.isEmpty()) {
-                findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
-            } else {
-                getStories()
-            }
-        }
+//        homeViewModel.getSession().observe(viewLifecycleOwner) {
+//            Log.d("check token before", it.token)
+//            if (it.token.isEmpty()) {
+//                findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
+//            } else {
+//                getStories()
+//            }
+//        }
+
+        getStories()
 
         binding.buttonAdd.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addStoryFragment)
@@ -62,7 +70,8 @@ class HomeFragment : Fragment() {
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_logout -> {
-                        homeViewModel.logout()
+                        loginViewModel.logout()
+                        findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
                         true
                     }
 
@@ -81,12 +90,11 @@ class HomeFragment : Fragment() {
         val storyAdapter = StoryAdapter()
         binding.rvStories.apply {
             layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
             adapter = storyAdapter
+            setHasFixedSize(true)
         }
 
         homeViewModel.getStories().observe(viewLifecycleOwner) { result ->
-
             if (result != null)
                 when (result) {
                     is ResultState.Loading -> {
@@ -97,22 +105,22 @@ class HomeFragment : Fragment() {
                         showLoading(false)
                         val storyData = result.data
 
-                        storyAdapter.setOnItemClickCallback(object :
-                            StoryAdapter.OnItemClickCallback {
-                            override fun onItemClicked(
-                                story: ListStoryItem,
-                            ) {
-                                val position = storyData.indexOf(story)
-                                if (position != -1) {
-                                    val id = storyData[position].id
-                                    val toDetailFragment =
-                                        HomeFragmentDirections.actionHomeFragmentToDetailFragment()
-                                    toDetailFragment.idStory = id
-
-                                    findNavController().navigate(toDetailFragment)
-                                }
-                            }
-                        })
+//                        storyAdapter.setOnItemClickCallback(object :
+//                            StoryAdapter.OnItemClickCallback {
+//                            override fun onItemClicked(
+//                                story: ListStoryItem,
+//                            ) {
+//                                val position = storyData.indexOf(story)
+//                                if (position != -1) {
+//                                    val id = storyData[position].id
+//                                    val toDetailFragment =
+//                                        HomeFragmentDirections.actionHomeFragmentToDetailFragment()
+//                                    toDetailFragment.idStory = id
+//
+//                                    findNavController().navigate(toDetailFragment)
+//                                }
+//                            }
+//                        })
                         storyAdapter.submitList(storyData)
                     }
 

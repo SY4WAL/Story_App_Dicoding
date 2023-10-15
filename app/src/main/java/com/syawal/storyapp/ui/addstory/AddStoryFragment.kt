@@ -19,7 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
-import com.syawal.storyapp.ui.ViewModelFactory
+import com.syawal.storyapp.ui.StoryViewModelFactory
 import com.syawal.storyapp.ui.addstory.camerax.CameraActivity
 import com.syawal.storyapp.ui.addstory.camerax.CameraActivity.Companion.CAMERAX_RESULT
 import com.syawal.storyapp.utils.reduceFileImage
@@ -31,7 +31,7 @@ class AddStoryFragment : Fragment() {
     private val binding get() = _binding!!
     private var currentImageUri: Uri? = null
     private val addStoryViewModel by viewModels<AddStoryViewModel> {
-        ViewModelFactory.getInstance(requireActivity())
+        StoryViewModelFactory.getInstance(requireActivity())
     }
 
     private fun allPermissionsGranted() =

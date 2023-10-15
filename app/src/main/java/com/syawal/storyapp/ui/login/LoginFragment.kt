@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.databinding.FragmentLoginBinding
+import com.syawal.storyapp.ui.AuthViewModelFactory
 import com.syawal.storyapp.ui.ViewModelFactory
 
 
@@ -20,7 +21,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val loginViewModel by viewModels<LoginViewModel> {
-        ViewModelFactory.getInstance(requireActivity())
+        AuthViewModelFactory.getInstance(requireActivity())
     }
 
     override fun onCreateView(

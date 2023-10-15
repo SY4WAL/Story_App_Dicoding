@@ -6,11 +6,15 @@ import android.graphics.Bitmap
 import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
+import androidx.lifecycle.map
 import com.bumptech.glide.Glide
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.Repository
 import com.syawal.storyapp.data.ResultState
+import com.syawal.storyapp.data.StoryRepository
 import com.syawal.storyapp.data.api.response.ListStoryItem
+import com.syawal.storyapp.data.local.StoryDatabase
+import com.syawal.storyapp.data.local.StoryEntity
 import com.syawal.storyapp.ui.detail.DetailFragment.Companion.EXTRA_ID
 import com.syawal.storyapp.ui.widget.StoryWidget.Companion.EXTRA_ITEM
 import kotlinx.coroutines.CoroutineScope
@@ -19,57 +23,33 @@ import kotlinx.coroutines.launch
 
 internal class StackRemoteViewsFactory(
     private val context: Context,
-    private val repository: Repository
-): RemoteViewsService.RemoteViewsFactory {
+) : RemoteViewsService.RemoteViewsFactory {
 
-    private val storyList = arrayListOf<ListStoryItem>()
+    private var storyList = listOf<StoryEntity>()
     private val storyBitmap = arrayListOf<Bitmap>()
+
 
     override fun onCreate() {
 
     }
 
     override fun onDataSetChanged() {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val token = repository.getSession().toString()
-                val response = repository.getStories().value
-                when (response) {
-                    is ResultState.Success -> {
-                        val stories = response.data
-                        val bitmap = stories.map {
-                            Glide.with(context)
-                                .asBitmap()
-                                .load(it.photoUrl)
-                                .submit()
-                                .get()
-                        }
+        val db = StoryDatabase.getInstance(context)
+        storyList = db.storyDao().getWidgetStory()
+        Log.d("widget", storyList.toString())
 
-                        storyBitmap.clear()
-                        storyList.clear()
-                        storyBitmap.addAll(bitmap)
-                        storyList.addAll(stories)
-
-                        Log.d("Widget stack", "storyList size: ${storyList.size}")
-                    }
-                    is ResultState.Error -> {
-                        val message = response.error
-                        Log.e("Widget stack", "Error loading stories: $message")
-                    }
-
-                    is ResultState.Loading -> {
-                        Log.d("Widget", "Still loading")
-                    }
-
-                    else -> {
-                        Log.d("Widget", "Unhandled response state: $response")
-                    }
-
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        val bitmap = storyList.map {
+            Glide.with(context)
+                .asBitmap()
+                .load(it.photoUrl)
+                .submit()
+                .get()
         }
+
+        storyBitmap.clear()
+        storyBitmap.addAll(bitmap)
+
+        Log.d("widget data", bitmap.toString())
     }
 
     override fun onDestroy() {

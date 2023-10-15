@@ -2,23 +2,26 @@ package com.syawal.storyapp.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.syawal.storyapp.data.api.response.ListStoryItem
+import com.syawal.storyapp.data.local.StoryEntity
 import com.syawal.storyapp.databinding.ItemStoriesBinding
+import com.syawal.storyapp.ui.home.HomeFragmentDirections
 
-class StoryAdapter: ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter: ListAdapter<StoryEntity, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-    private lateinit var onItemClickCallback: OnItemClickCallback
-
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
-    }
+//    private lateinit var onItemClickCallback: OnItemClickCallback
+//
+//    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+//        this.onItemClickCallback = onItemClickCallback
+//    }
 
     inner class MyViewHolder(val binding: ItemStoriesBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(story: ListStoryItem) {
+        fun bind(story: StoryEntity) {
             binding.tvItemName.text = story.name
             binding.tvItemDesc.text = story.description
 
@@ -27,7 +30,11 @@ class StoryAdapter: ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_C
                 .into(binding.ivItemPhoto)
 
             binding.root.setOnClickListener {
-                onItemClickCallback.onItemClicked(story)
+//                onItemClickCallback.onItemClicked(story)
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
+                action.idStory = story.id
+                val extras = FragmentNavigatorExtras(binding.ivItemPhoto to "photo")
+                itemView.findNavController().navigate(action, extras)
             }
         }
     }
@@ -43,17 +50,17 @@ class StoryAdapter: ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_C
         holder.bind(story)
     }
 
-    interface OnItemClickCallback {
-        fun onItemClicked(story: ListStoryItem)
-    }
+//    interface OnItemClickCallback {
+//        fun onItemClicked(story: StoryEntity)
+//    }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
-            override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryEntity>() {
+            override fun areItemsTheSame(oldItem: StoryEntity, newItem: StoryEntity): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            override fun areContentsTheSame(oldItem: StoryEntity, newItem: StoryEntity): Boolean {
                 return oldItem == newItem
             }
         }

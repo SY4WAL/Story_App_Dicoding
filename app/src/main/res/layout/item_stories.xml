@@ -21,6 +21,7 @@
             android:scaleType="centerCrop"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
+            android:transitionName="photo"
             tools:src="@tools:sample/avatars"
             android:contentDescription="@string/stories_image" />
 
@@ -42,6 +43,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             android:ems="15"
+            android:maxLines="3"
+            android:ellipsize="end"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@id/tv_item_name"
