@@ -75,7 +75,7 @@ class AddStoryFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-                upload()
+            upload()
         }
     }
 
@@ -106,25 +106,25 @@ class AddStoryFragment : Fragment() {
             val desc = binding.edAddDescription.text.toString()
 
             addStoryViewModel.uploadStory(imgFile, desc).observe(viewLifecycleOwner) { result ->
-                    if (result != null) {
-                        when (result) {
-                            is ResultState.Loading -> {
-                                showLoading(true)
-                            }
+                if (result != null) {
+                    when (result) {
+                        is ResultState.Loading -> {
+                            showLoading(true)
+                        }
 
-                            is ResultState.Success -> {
-                                showToast(result.data.message)
-                                showLoading(false)
-                                findNavController().navigate(R.id.action_addStoryFragment_to_homeFragment)
-                            }
+                        is ResultState.Success -> {
+                            showToast(result.data.message)
+                            showLoading(false)
+                            findNavController().navigate(R.id.action_addStoryFragment_to_homeFragment)
+                        }
 
-                            is ResultState.Error -> {
-                                showToast(result.error)
-                                showLoading(false)
-                            }
+                        is ResultState.Error -> {
+                            showToast(result.error)
+                            showLoading(false)
                         }
                     }
                 }
+            }
         }
     }
 

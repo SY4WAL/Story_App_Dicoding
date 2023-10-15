@@ -13,8 +13,6 @@ import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.databinding.FragmentLoginBinding
 import com.syawal.storyapp.ui.AuthViewModelFactory
-import com.syawal.storyapp.ui.ViewModelFactory
-
 
 class LoginFragment : Fragment() {
 
@@ -55,7 +53,7 @@ class LoginFragment : Fragment() {
                     is ResultState.Success -> {
                         showToast(result.data.message)
                         loginViewModel.saveSession(result.data.loginResult)
-                        Log.d("check login", result.data.loginResult.token)
+                        Log.d("check token login", result.data.loginResult.token)
                         showLoading(false)
                         navController.navigate(R.id.action_loginFragment_to_homeFragment)
                     }

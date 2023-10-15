@@ -12,15 +12,10 @@ import com.syawal.storyapp.data.local.StoryEntity
 import com.syawal.storyapp.databinding.ItemStoriesBinding
 import com.syawal.storyapp.ui.home.HomeFragmentDirections
 
-class StoryAdapter: ListAdapter<StoryEntity, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : ListAdapter<StoryEntity, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-//    private lateinit var onItemClickCallback: OnItemClickCallback
-//
-//    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-//        this.onItemClickCallback = onItemClickCallback
-//    }
-
-    inner class MyViewHolder(val binding: ItemStoriesBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class MyViewHolder(private val binding: ItemStoriesBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(story: StoryEntity) {
             binding.tvItemName.text = story.name
             binding.tvItemDesc.text = story.description
@@ -30,7 +25,6 @@ class StoryAdapter: ListAdapter<StoryEntity, StoryAdapter.MyViewHolder>(DIFF_CAL
                 .into(binding.ivItemPhoto)
 
             binding.root.setOnClickListener {
-//                onItemClickCallback.onItemClicked(story)
                 val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
                 action.idStory = story.id
                 val extras = FragmentNavigatorExtras(binding.ivItemPhoto to "photo")
@@ -49,10 +43,6 @@ class StoryAdapter: ListAdapter<StoryEntity, StoryAdapter.MyViewHolder>(DIFF_CAL
 
         holder.bind(story)
     }
-
-//    interface OnItemClickCallback {
-//        fun onItemClicked(story: StoryEntity)
-//    }
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryEntity>() {

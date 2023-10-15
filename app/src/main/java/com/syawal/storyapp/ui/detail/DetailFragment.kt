@@ -82,13 +82,5 @@ class DetailFragment : Fragment() {
 
     companion object {
         const val EXTRA_ID = "extra_id"
-
-        fun newInstance(storyId: String): DetailFragment {
-            val args = Bundle()
-            args.putString(EXTRA_ID, storyId)
-            val fragment = DetailFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 }

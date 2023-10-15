@@ -1,4 +1,5 @@
 package com.syawal.storyapp.customview
+
 import android.content.Context
 import android.graphics.Canvas
 import android.text.Editable
@@ -18,7 +19,11 @@ class PassEditText : AppCompatEditText {
         init()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         init()
     }
 

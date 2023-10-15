@@ -53,7 +53,7 @@ class AuthRepository private constructor(
 
     companion object {
         @Volatile
-        private var INSTANCE: AuthRepository ?= null
+        private var INSTANCE: AuthRepository? = null
 
         fun getInstance(
             apiService: ApiService,

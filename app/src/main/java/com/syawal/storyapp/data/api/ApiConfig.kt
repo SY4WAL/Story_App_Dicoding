@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        private const val endpoint = "https://story-api.dicoding.dev/v1/"
+        private const val ENDPOINT = "https://story-api.dicoding.dev/v1/"
 
         fun getApiService(token: String): ApiService {
             val loggingInterceptor = if (BuildConfig.DEBUG) {
@@ -34,7 +34,7 @@ class ApiConfig {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(endpoint)
+                .baseUrl(ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

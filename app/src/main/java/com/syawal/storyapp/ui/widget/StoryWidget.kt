@@ -7,13 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
 import com.syawal.storyapp.R
-import com.syawal.storyapp.ui.MainActivity
-import com.syawal.storyapp.ui.detail.DetailFragment
 import com.syawal.storyapp.ui.detail.DetailFragment.Companion.EXTRA_ID
 
 
@@ -64,20 +61,6 @@ class StoryWidget : AppWidgetProvider() {
         super.onReceive(context, intent)
         if (INTENT_ACTION == intent.action) {
             val storyId = intent.getStringExtra(EXTRA_ID)
-//            val toDetailIntent = Intent(context, MainActivity::class.java).apply {
-//                putExtra(EXTRA_ID, storyId)
-//                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//            }
-//            context.startActivity(toDetailIntent)
-
-//            if (storyId != null) {
-//                val detailFragment = DetailFragment.newInstance(storyId)
-//                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-//                fragmentManager.beginTransaction()
-//                    .replace(R.id.detailFragment, detailFragment)
-//                    .addToBackStack(null)
-//                    .commit()
-//            }
 
             if (storyId != null) {
                 val navIntent = NavDeepLinkBuilder(context)

@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.syawal.storyapp.R
 import com.syawal.storyapp.databinding.FragmentWelcomeBinding
 import com.syawal.storyapp.ui.AuthViewModelFactory
-import com.syawal.storyapp.ui.ViewModelFactory
 
 class WelcomeFragment : Fragment() {
 
@@ -44,7 +43,7 @@ class WelcomeFragment : Fragment() {
 
         playAnimation()
 
-        binding.btnLogin.setOnClickListener{
+        binding.btnLogin.setOnClickListener {
             view.findNavController().navigate(R.id.action_welcomeFragment_to_loginFragment)
         }
 

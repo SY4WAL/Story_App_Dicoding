@@ -6,7 +6,7 @@ import androidx.lifecycle.asLiveData
 import com.syawal.storyapp.data.AuthRepository
 import com.syawal.storyapp.data.api.response.LoginResult
 
-class WelcomeViewModel (private val repository: AuthRepository) : ViewModel() {
+class WelcomeViewModel(private val repository: AuthRepository) : ViewModel() {
     fun getSession(): LiveData<LoginResult> {
         return repository.getSession().asLiveData()
     }

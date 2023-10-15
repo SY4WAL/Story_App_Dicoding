@@ -33,7 +33,7 @@ class StoryViewModelFactory(private val storyRepository: StoryRepository) :
 
     companion object {
         @Volatile
-        private var INSTANCE: StoryViewModelFactory ?= null
+        private var INSTANCE: StoryViewModelFactory? = null
 
         @JvmStatic
         fun getInstance(context: Context): StoryViewModelFactory {

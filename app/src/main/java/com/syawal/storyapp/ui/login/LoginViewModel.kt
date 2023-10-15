@@ -3,7 +3,6 @@ package com.syawal.storyapp.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.syawal.storyapp.data.AuthRepository
-import com.syawal.storyapp.data.Repository
 import com.syawal.storyapp.data.api.response.LoginResult
 import kotlinx.coroutines.launch
 

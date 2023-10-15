@@ -6,20 +6,12 @@ import android.graphics.Bitmap
 import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import androidx.lifecycle.map
 import com.bumptech.glide.Glide
 import com.syawal.storyapp.R
-import com.syawal.storyapp.data.Repository
-import com.syawal.storyapp.data.ResultState
-import com.syawal.storyapp.data.StoryRepository
-import com.syawal.storyapp.data.api.response.ListStoryItem
 import com.syawal.storyapp.data.local.StoryDatabase
 import com.syawal.storyapp.data.local.StoryEntity
 import com.syawal.storyapp.ui.detail.DetailFragment.Companion.EXTRA_ID
 import com.syawal.storyapp.ui.widget.StoryWidget.Companion.EXTRA_ITEM
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 internal class StackRemoteViewsFactory(
     private val context: Context,

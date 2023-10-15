@@ -12,7 +12,6 @@ import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.databinding.FragmentRegisterBinding
 import com.syawal.storyapp.ui.AuthViewModelFactory
-import com.syawal.storyapp.ui.ViewModelFactory
 
 class RegisterFragment : Fragment() {
 
@@ -27,8 +26,7 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

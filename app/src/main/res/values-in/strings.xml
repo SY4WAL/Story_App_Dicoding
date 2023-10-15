@@ -23,7 +23,6 @@
     <string name="capture_image">Menangkap gambar</string>
     <string name="failed_to_load_image">Gagal memuat gambar</string>
     <string name="appwidget_text">Story Widget</string>
-    <string name="add_widget">Tambah Widget</string>
     <string name="app_widget_description">Ini adalah deskripsi widget</string>
     <string name="empty_text">TIDAK ADA DATA</string>
 </resources>

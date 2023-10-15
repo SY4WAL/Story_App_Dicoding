@@ -3,7 +3,6 @@ package com.syawal.storyapp.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +13,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
-import com.syawal.storyapp.data.api.response.ListStoryItem
 import com.syawal.storyapp.databinding.FragmentHomeBinding
 import com.syawal.storyapp.ui.AuthViewModelFactory
 import com.syawal.storyapp.ui.StoryAdapter
 import com.syawal.storyapp.ui.StoryViewModelFactory
-import com.syawal.storyapp.ui.ViewModelFactory
 import com.syawal.storyapp.ui.login.LoginViewModel
 
 class HomeFragment : Fragment() {
@@ -43,15 +40,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        homeViewModel.getSession().observe(viewLifecycleOwner) {
-//            Log.d("check token before", it.token)
-//            if (it.token.isEmpty()) {
-//                findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
-//            } else {
-//                getStories()
-//            }
-//        }
 
         getStories()
 
@@ -104,23 +92,6 @@ class HomeFragment : Fragment() {
                     is ResultState.Success -> {
                         showLoading(false)
                         val storyData = result.data
-
-//                        storyAdapter.setOnItemClickCallback(object :
-//                            StoryAdapter.OnItemClickCallback {
-//                            override fun onItemClicked(
-//                                story: ListStoryItem,
-//                            ) {
-//                                val position = storyData.indexOf(story)
-//                                if (position != -1) {
-//                                    val id = storyData[position].id
-//                                    val toDetailFragment =
-//                                        HomeFragmentDirections.actionHomeFragmentToDetailFragment()
-//                                    toDetailFragment.idStory = id
-//
-//                                    findNavController().navigate(toDetailFragment)
-//                                }
-//                            }
-//                        })
                         storyAdapter.submitList(storyData)
                     }
 

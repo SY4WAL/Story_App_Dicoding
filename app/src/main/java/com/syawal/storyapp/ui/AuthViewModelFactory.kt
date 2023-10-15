@@ -9,7 +9,8 @@ import com.syawal.storyapp.ui.login.LoginViewModel
 import com.syawal.storyapp.ui.register.RegisterViewModel
 import com.syawal.storyapp.ui.welcome.WelcomeViewModel
 
-class AuthViewModelFactory(private val repository: AuthRepository): ViewModelProvider.NewInstanceFactory() {
+class AuthViewModelFactory(private val repository: AuthRepository) :
+    ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -33,7 +34,7 @@ class AuthViewModelFactory(private val repository: AuthRepository): ViewModelPro
 
     companion object {
         @Volatile
-        private var INSTANCE: AuthViewModelFactory ?= null
+        private var INSTANCE: AuthViewModelFactory? = null
 
         @JvmStatic
         fun getInstance(context: Context): AuthViewModelFactory {
