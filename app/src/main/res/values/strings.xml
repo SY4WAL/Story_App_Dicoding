@@ -24,4 +24,6 @@
     <string name="appwidget_text">Story Widget</string>
     <string name="app_widget_description">This is an app widget description</string>
     <string name="empty_text">NO DATA</string>
+    <string name="map" translatable="false">Map</string>
+    <string name="title_activity_maps" translatable="false">MapsActivity</string>
 </resources>

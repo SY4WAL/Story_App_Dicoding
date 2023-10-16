@@ -47,6 +47,18 @@ class StoryRepository private constructor(
         emitSource(localData)
     }
 
+    fun getStoryWithLocation() = liveData {
+        emit(ResultState.Loading)
+        try {
+            val successResponse = apiService.getStoriesWithLocation()
+            emit(ResultState.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.toString()
+            val errorResponse = Gson().fromJson(errorBody, StoryResponse::class.java)
+            emit(ResultState.Error(errorResponse.message))
+        }
+    }
+
     fun getDetailStory(id: String) = liveData {
         emit(ResultState.Loading)
         try {

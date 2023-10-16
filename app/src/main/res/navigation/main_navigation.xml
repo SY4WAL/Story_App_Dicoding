@@ -85,4 +85,9 @@
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <activity
+        android:id="@+id/mapsActivity"
+        android:name="com.syawal.storyapp.ui.maps.MapsActivity"
+        android:label="activity_maps"
+        tools:layout="@layout/activity_maps" />
 </navigation>

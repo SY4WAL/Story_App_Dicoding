@@ -8,6 +8,7 @@ import com.syawal.storyapp.di.Injection
 import com.syawal.storyapp.ui.addstory.AddStoryViewModel
 import com.syawal.storyapp.ui.detail.DetailViewModel
 import com.syawal.storyapp.ui.home.HomeViewModel
+import com.syawal.storyapp.ui.maps.MapsViewModel
 
 class StoryViewModelFactory(private val storyRepository: StoryRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -25,6 +26,10 @@ class StoryViewModelFactory(private val storyRepository: StoryRepository) :
 
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
                 AddStoryViewModel(storyRepository) as T
+            }
+
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(storyRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class " + modelClass.name)

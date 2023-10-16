@@ -18,6 +18,7 @@ import com.syawal.storyapp.ui.AuthViewModelFactory
 import com.syawal.storyapp.ui.StoryAdapter
 import com.syawal.storyapp.ui.StoryViewModelFactory
 import com.syawal.storyapp.ui.login.LoginViewModel
+import com.syawal.storyapp.ui.maps.MapsActivity
 
 class HomeFragment : Fragment() {
 
@@ -65,6 +66,12 @@ class HomeFragment : Fragment() {
 
                     R.id.menu_setting -> {
                         startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+                        true
+                    }
+
+                    R.id.menu_map -> {
+                        val intent = Intent(requireContext(), MapsActivity::class.java)
+                        startActivity(intent)
                         true
                     }
 
