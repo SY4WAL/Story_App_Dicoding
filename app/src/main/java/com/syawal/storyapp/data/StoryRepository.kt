@@ -10,11 +10,9 @@ import androidx.paging.liveData
 import com.google.gson.Gson
 import com.syawal.storyapp.data.api.ApiService
 import com.syawal.storyapp.data.api.response.DetailStoryResponse
-import com.syawal.storyapp.data.api.response.ListStoryItem
 import com.syawal.storyapp.data.api.response.StoryResponse
 import com.syawal.storyapp.data.local.StoryDatabase
 import com.syawal.storyapp.data.local.entity.StoryEntity
-import com.syawal.storyapp.data.paging.StoryPagingSource
 import com.syawal.storyapp.data.paging.StoryRemoteMediator
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -27,7 +25,6 @@ class StoryRepository private constructor(
     private val apiService: ApiService,
     private val database: StoryDatabase
 ) {
-
     fun getStory(): LiveData<PagingData<StoryEntity>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(

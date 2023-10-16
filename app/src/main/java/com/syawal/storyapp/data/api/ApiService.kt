@@ -1,7 +1,6 @@
 package com.syawal.storyapp.data.api
 
 import com.syawal.storyapp.data.api.response.DetailStoryResponse
-import com.syawal.storyapp.data.api.response.ListStoryItem
 import com.syawal.storyapp.data.api.response.LoginResponse
 import com.syawal.storyapp.data.api.response.RegisterResponse
 import com.syawal.storyapp.data.api.response.StoryResponse
