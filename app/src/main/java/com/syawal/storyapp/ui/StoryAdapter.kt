@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.syawal.storyapp.data.local.StoryEntity
+import com.syawal.storyapp.data.local.entity.StoryEntity
 import com.syawal.storyapp.databinding.ItemStoriesBinding
 import com.syawal.storyapp.ui.home.HomeFragmentDirections
 
-class StoryAdapter : ListAdapter<StoryEntity, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : PagingDataAdapter<StoryEntity, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     inner class MyViewHolder(private val binding: ItemStoriesBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -41,17 +41,19 @@ class StoryAdapter : ListAdapter<StoryEntity, StoryAdapter.MyViewHolder>(DIFF_CA
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val story = getItem(position)
 
-        holder.bind(story)
+        if (story != null) {
+            holder.bind(story)
+        }
     }
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryEntity>() {
             override fun areItemsTheSame(oldItem: StoryEntity, newItem: StoryEntity): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: StoryEntity, newItem: StoryEntity): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
         }
     }

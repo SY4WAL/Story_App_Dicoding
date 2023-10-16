@@ -2,13 +2,20 @@ package com.syawal.storyapp.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import androidx.lifecycle.map
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.google.gson.Gson
 import com.syawal.storyapp.data.api.ApiService
 import com.syawal.storyapp.data.api.response.DetailStoryResponse
+import com.syawal.storyapp.data.api.response.ListStoryItem
 import com.syawal.storyapp.data.api.response.StoryResponse
-import com.syawal.storyapp.data.local.StoryDao
-import com.syawal.storyapp.data.local.StoryEntity
+import com.syawal.storyapp.data.local.StoryDatabase
+import com.syawal.storyapp.data.local.entity.StoryEntity
+import com.syawal.storyapp.data.paging.StoryPagingSource
+import com.syawal.storyapp.data.paging.StoryRemoteMediator
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -18,33 +25,20 @@ import java.io.File
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
-    private val storyDao: StoryDao
+    private val database: StoryDatabase
 ) {
-    fun getStories() = liveData {
-        emit(ResultState.Loading)
-        try {
-            val successResponse = apiService.getStories().listStory
-            val storyList = successResponse.map { story ->
-                StoryEntity(
-                    story.id,
-                    story.photoUrl,
-                    story.name,
-                    story.description,
-                    story.createdAt,
-                    story.lon,
-                    story.lat
-                )
+
+    fun getStory(): LiveData<PagingData<StoryEntity>> {
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            remoteMediator = StoryRemoteMediator(apiService, database),
+            pagingSourceFactory = {
+                database.storyDao().getAllStory()
             }
-            storyDao.deleteALl()
-            storyDao.insertStory(storyList)
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, StoryResponse::class.java)
-            emit(ResultState.Error(errorResponse.message))
-        }
-        val localData: LiveData<ResultState<List<StoryEntity>>> =
-            storyDao.getStory().map { ResultState.Success(it) }
-        emitSource(localData)
+        ).liveData
     }
 
     fun getStoryWithLocation() = liveData {
@@ -96,10 +90,10 @@ class StoryRepository private constructor(
 
         fun getInstance(
             apiService: ApiService,
-            storyDao: StoryDao
+            database: StoryDatabase
         ): StoryRepository =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: StoryRepository(apiService, storyDao)
+                INSTANCE ?: StoryRepository(apiService, database)
             }.also { INSTANCE = it }
     }
 }

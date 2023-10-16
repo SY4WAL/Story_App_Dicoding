@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.databinding.FragmentLoginBinding
-import com.syawal.storyapp.ui.AuthViewModelFactory
+import com.syawal.storyapp.ui.viewmodelfactory.AuthViewModelFactory
 
 class LoginFragment : Fragment() {
 

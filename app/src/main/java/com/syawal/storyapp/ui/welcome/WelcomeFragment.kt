@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.syawal.storyapp.R
 import com.syawal.storyapp.databinding.FragmentWelcomeBinding
-import com.syawal.storyapp.ui.AuthViewModelFactory
+import com.syawal.storyapp.ui.viewmodelfactory.AuthViewModelFactory
 
 class WelcomeFragment : Fragment() {
 

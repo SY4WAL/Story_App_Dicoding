@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.databinding.FragmentDetailBinding
-import com.syawal.storyapp.ui.StoryViewModelFactory
+import com.syawal.storyapp.ui.viewmodelfactory.StoryViewModelFactory
 
 class DetailFragment : Fragment() {
 

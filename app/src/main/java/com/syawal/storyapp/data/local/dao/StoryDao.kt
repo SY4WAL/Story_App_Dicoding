@@ -1,10 +1,11 @@
-package com.syawal.storyapp.data.local
+package com.syawal.storyapp.data.local.dao
 
-import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.syawal.storyapp.data.local.entity.StoryEntity
 
 @Dao
 interface StoryDao {
@@ -15,7 +16,7 @@ interface StoryDao {
     suspend fun deleteALl()
 
     @Query("SELECT * FROM story ORDER BY createdAt DESC")
-    fun getStory(): LiveData<List<StoryEntity>>
+    fun getAllStory(): PagingSource<Int, StoryEntity>
 
     @Query("SELECT * FROM story ORDER BY createdAt DESC")
     fun getWidgetStory(): List<StoryEntity>

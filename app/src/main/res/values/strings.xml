@@ -26,4 +26,5 @@
     <string name="empty_text">NO DATA</string>
     <string name="map" translatable="false">Map</string>
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
+    <string name="retry">Retry</string>
 </resources>

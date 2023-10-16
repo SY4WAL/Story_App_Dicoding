@@ -1,4 +1,4 @@
-package com.syawal.storyapp.ui
+package com.syawal.storyapp.ui.viewmodelfactory
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

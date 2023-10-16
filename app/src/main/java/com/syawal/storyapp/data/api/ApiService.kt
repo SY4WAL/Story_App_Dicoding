@@ -1,6 +1,7 @@
 package com.syawal.storyapp.data.api
 
 import com.syawal.storyapp.data.api.response.DetailStoryResponse
+import com.syawal.storyapp.data.api.response.ListStoryItem
 import com.syawal.storyapp.data.api.response.LoginResponse
 import com.syawal.storyapp.data.api.response.RegisterResponse
 import com.syawal.storyapp.data.api.response.StoryResponse
@@ -33,7 +34,10 @@ interface ApiService {
     ): LoginResponse
 
     @GET("stories")
-    suspend fun getStories(): StoryResponse
+    suspend fun getStories(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): StoryResponse
 
     @GET("stories")
     suspend fun getStoriesWithLocation(

@@ -3,20 +3,20 @@ package com.syawal.storyapp.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.syawal.storyapp.R
-import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.databinding.FragmentHomeBinding
-import com.syawal.storyapp.ui.AuthViewModelFactory
+import com.syawal.storyapp.ui.LoadingStateAdapter
+import com.syawal.storyapp.ui.viewmodelfactory.AuthViewModelFactory
 import com.syawal.storyapp.ui.StoryAdapter
-import com.syawal.storyapp.ui.StoryViewModelFactory
+import com.syawal.storyapp.ui.viewmodelfactory.StoryViewModelFactory
 import com.syawal.storyapp.ui.login.LoginViewModel
 import com.syawal.storyapp.ui.maps.MapsActivity
 
@@ -83,39 +83,17 @@ class HomeFragment : Fragment() {
 
     private fun getStories() {
         val storyAdapter = StoryAdapter()
-        binding.rvStories.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = storyAdapter
-            setHasFixedSize(true)
+        binding.rvStories.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvStories.adapter = storyAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter{
+                storyAdapter.retry()
+            }
+        )
+
+        homeViewModel.story.observe(viewLifecycleOwner) {
+            Log.d("recycler", it.toString())
+            storyAdapter.submitData(lifecycle, it)
         }
-
-        homeViewModel.getStories().observe(viewLifecycleOwner) { result ->
-            if (result != null)
-                when (result) {
-                    is ResultState.Loading -> {
-                        showLoading(true)
-                    }
-
-                    is ResultState.Success -> {
-                        showLoading(false)
-                        val storyData = result.data
-                        storyAdapter.submitList(storyData)
-                    }
-
-                    is ResultState.Error -> {
-                        showLoading(false)
-                        showToast(result.error)
-                    }
-                }
-        }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {

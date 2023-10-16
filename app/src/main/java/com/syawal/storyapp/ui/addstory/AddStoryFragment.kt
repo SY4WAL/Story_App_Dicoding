@@ -19,7 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
-import com.syawal.storyapp.ui.StoryViewModelFactory
+import com.syawal.storyapp.ui.viewmodelfactory.StoryViewModelFactory
 import com.syawal.storyapp.ui.addstory.camerax.CameraActivity
 import com.syawal.storyapp.ui.addstory.camerax.CameraActivity.Companion.CAMERAX_RESULT
 import com.syawal.storyapp.utils.reduceFileImage

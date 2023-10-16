@@ -9,7 +9,7 @@ import android.widget.RemoteViewsService
 import com.bumptech.glide.Glide
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.local.StoryDatabase
-import com.syawal.storyapp.data.local.StoryEntity
+import com.syawal.storyapp.data.local.entity.StoryEntity
 import com.syawal.storyapp.ui.detail.DetailFragment.Companion.EXTRA_ID
 import com.syawal.storyapp.ui.widget.StoryWidget.Companion.EXTRA_ITEM
 

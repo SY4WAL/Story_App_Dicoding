@@ -5,9 +5,6 @@ import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -23,7 +20,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.databinding.ActivityMapsBinding
-import com.syawal.storyapp.ui.StoryViewModelFactory
+import com.syawal.storyapp.ui.viewmodelfactory.StoryViewModelFactory
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
