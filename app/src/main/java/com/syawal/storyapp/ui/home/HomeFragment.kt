@@ -3,11 +3,11 @@ package com.syawal.storyapp.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -85,13 +85,16 @@ class HomeFragment : Fragment() {
         val storyAdapter = StoryAdapter()
         binding.rvStories.layoutManager = LinearLayoutManager(requireContext())
         binding.rvStories.adapter = storyAdapter.withLoadStateFooter(
-            footer = LoadingStateAdapter{
+            footer = LoadingStateAdapter {
                 storyAdapter.retry()
             }
         )
 
         homeViewModel.story.observe(viewLifecycleOwner) {
-            Log.d("recycler", it.toString())
+            if (it == null) {
+                Toast.makeText(requireContext(), getString(R.string.no_data), Toast.LENGTH_SHORT)
+                    .show()
+            }
             storyAdapter.submitData(lifecycle, it)
         }
     }

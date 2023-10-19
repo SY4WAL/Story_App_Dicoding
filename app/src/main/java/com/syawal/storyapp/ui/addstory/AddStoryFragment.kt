@@ -14,9 +14,11 @@ import androidx.core.content.ContextCompat
 import com.syawal.storyapp.databinding.FragmentAddStoryBinding
 import android.Manifest
 import android.content.Intent
+import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.LocationServices
 import com.syawal.storyapp.R
 import com.syawal.storyapp.data.ResultState
 import com.syawal.storyapp.ui.viewmodelfactory.StoryViewModelFactory
@@ -34,13 +36,13 @@ class AddStoryFragment : Fragment() {
         StoryViewModelFactory.getInstance(requireActivity())
     }
 
-    private fun allPermissionsGranted() =
+    private fun cameraPermissionsGranted() =
         ContextCompat.checkSelfPermission(
-            requireActivity(),
-            REQUIRED_PERMISSION
+            requireContext(),
+            CAMERA_PERMISSION
         ) == PackageManager.PERMISSION_GRANTED
 
-    private val requestPermissionLauncher =
+    private val permissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -62,8 +64,8 @@ class AddStoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (!allPermissionsGranted()) {
-            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+        if (!cameraPermissionsGranted()) {
+            permissionLauncher.launch(CAMERA_PERMISSION)
         }
 
         binding.btnGallery.setOnClickListener {
@@ -74,8 +76,15 @@ class AddStoryFragment : Fragment() {
             startCameraX()
         }
 
+        val checkbox = binding.checkbox
         binding.buttonAdd.setOnClickListener {
-            upload()
+            if (checkbox.isChecked) {
+                getMyLastLocation { lat, lon ->
+                    upload(lat, lon)
+                }
+            } else {
+                upload(lat = null, lon = null)
+            }
         }
     }
 
@@ -100,30 +109,53 @@ class AddStoryFragment : Fragment() {
         }
     }
 
-    private fun upload() {
+    private fun upload(lat: Double?, lon: Double?) {
         currentImageUri?.let { uri ->
             val imgFile = uriToFile(uri, requireContext()).reduceFileImage()
             val desc = binding.edAddDescription.text.toString()
 
-            addStoryViewModel.uploadStory(imgFile, desc).observe(viewLifecycleOwner) { result ->
-                if (result != null) {
-                    when (result) {
-                        is ResultState.Loading -> {
-                            showLoading(true)
-                        }
+            addStoryViewModel.uploadStory(imgFile, desc, lat, lon)
+                .observe(viewLifecycleOwner) { result ->
+                    if (result != null) {
+                        when (result) {
+                            is ResultState.Loading -> {
+                                showLoading(true)
+                            }
 
-                        is ResultState.Success -> {
-                            showToast(result.data.message)
-                            showLoading(false)
-                            findNavController().navigate(R.id.action_addStoryFragment_to_homeFragment)
-                        }
+                            is ResultState.Success -> {
+                                showToast(result.data.message)
+                                showLoading(false)
+                                findNavController().navigate(R.id.action_addStoryFragment_to_homeFragment)
+                            }
 
-                        is ResultState.Error -> {
-                            showToast(result.error)
-                            showLoading(false)
+                            is ResultState.Error -> {
+                                showToast(result.error)
+                                showLoading(false)
+                            }
                         }
                     }
                 }
+        }
+    }
+
+    private fun getMyLastLocation(callback: (Double?, Double?) -> Unit) {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                FINE_LOCATION_PERMISSION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissionLauncher.launch(FINE_LOCATION_PERMISSION)
+            return
+        }
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                val lat = location.latitude
+                val lon = location.longitude
+
+                callback(lat, lon)
+            } else {
+                showToast("Location not found")
             }
         }
     }
@@ -151,6 +183,7 @@ class AddStoryFragment : Fragment() {
     }
 
     companion object {
-        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+        private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
+        private const val FINE_LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION
     }
 }

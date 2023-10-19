@@ -7,6 +7,7 @@ import com.syawal.storyapp.data.api.response.LoginResponse
 import com.syawal.storyapp.data.api.response.LoginResult
 import com.syawal.storyapp.data.api.response.RegisterResponse
 import com.syawal.storyapp.data.pref.UserPreference
+import com.syawal.storyapp.utils.wrapEspressoIdlingResource
 import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
 
@@ -29,13 +30,15 @@ class AuthRepository private constructor(
 
     fun login(email: String, password: String) = liveData {
         emit(ResultState.Loading)
-        try {
-            val successResponse = apiService.login(email, password)
-            emit(ResultState.Success(successResponse))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
-            emit(ResultState.Error(errorResponse.message))
+        wrapEspressoIdlingResource {
+            try {
+                val successResponse = apiService.login(email, password)
+                emit(ResultState.Success(successResponse))
+            } catch (e: HttpException) {
+                val errorBody = e.response()?.errorBody()?.string()
+                val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
+                emit(ResultState.Error(errorResponse.message))
+            }
         }
     }
 

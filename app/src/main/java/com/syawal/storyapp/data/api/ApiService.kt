@@ -40,7 +40,7 @@ interface ApiService {
 
     @GET("stories")
     suspend fun getStoriesWithLocation(
-        @Query("location") location : Int = 1,
+        @Query("location") location: Int = 1,
     ): StoryResponse
 
     @GET("stories/{id}")
@@ -53,5 +53,7 @@ interface ApiService {
     suspend fun uploadStory(
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody,
+        @Part("lat") lat: RequestBody?,
+        @Part("lon") lon: RequestBody?
     ): RegisterResponse
 }

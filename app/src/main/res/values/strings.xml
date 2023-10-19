@@ -27,4 +27,6 @@
     <string name="map" translatable="false">Map</string>
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
     <string name="retry">Retry</string>
+    <string name="no_data">No data</string>
+    <string name="add_location">Add Location</string>
 </resources>

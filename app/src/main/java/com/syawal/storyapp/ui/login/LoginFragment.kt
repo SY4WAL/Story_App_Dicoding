@@ -1,7 +1,6 @@
 package com.syawal.storyapp.ui.login
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +52,6 @@ class LoginFragment : Fragment() {
                     is ResultState.Success -> {
                         showToast(result.data.message)
                         loginViewModel.saveSession(result.data.loginResult)
-                        Log.d("check token login", result.data.loginResult.token)
                         showLoading(false)
                         navController.navigate(R.id.action_loginFragment_to_homeFragment)
                     }

@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        private const val ENDPOINT = "https://story-api.dicoding.dev/v1/"
+        var ENDPOINT = "https://story-api.dicoding.dev/v1/"
 
         fun getApiService(token: String): ApiService {
             val loggingInterceptor = if (BuildConfig.DEBUG) {

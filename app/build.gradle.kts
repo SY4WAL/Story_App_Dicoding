@@ -35,6 +35,11 @@ android {
         buildConfig = true
     }
 
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+        animationsDisabled = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -91,4 +96,17 @@ dependencies {
     //paging
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("androidx.room:room-paging:2.6.0-rc01")
+
+    //location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    //testing
+    testImplementation("androidx.arch.core:core-testing:2.2.0") // InstantTaskExecutorRule
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3") //TestDispatcher
+    testImplementation("org.mockito:mockito-core:5.2.0")
+    testImplementation("org.mockito:mockito-inline:5.2.0")
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+    androidTestImplementation("com.squareup.okhttp3:okhttp-tls:4.9.3")
+    implementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
 }
+
